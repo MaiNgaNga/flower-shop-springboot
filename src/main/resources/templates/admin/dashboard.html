@@ -1,0 +1,86 @@
+<style>
+  body {
+    background-color: #f8f9fc;
+  }
+  .card {
+    background-color: #466c8d;
+    border-radius: 10px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  .card-title {
+    font-size: 1.2rem;
+    color: #161617;
+  }
+  .card-value {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #343a40;
+  }
+  .card-footer {
+    font-size: 0.9rem;
+  }
+  .increase {
+    color: #42e668;
+  }
+  .decrease {
+    color: #dc3545;
+  }
+</style>
+
+<div class="container my-5">
+  <h2 class="mb-3">Dashboard</h2>
+  <p class="text-muted"></p>
+  <div class="row">
+    <!-- Tổng doanh thu -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card p-3">
+        <div class="card-body">
+          <h6 class="card-title">Tổng doanh thu</h6>
+          <p
+            class="card-value"
+            th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+          ></p>
+        </div>
+        <div class="card-footer text-muted">
+          <span class="increase" th:text="${totalCurrentMonth}"></span>
+          / Tháng này
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="card p-3">
+        <div class="card-body">
+          <h6 class="card-title">Số Đơn hoàn thành</h6>
+          <p class="card-value" th:text="${countOrder}"></p>
+        </div>
+        <div class="card-footer text-muted">
+          <span class="increase" th:text="${countOrderCurrentMonth}"></span>
+          / Tháng này
+        </div>
+      </div>
+    </div>
+    <!-- Số phiên trực tuyến -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card p-3">
+        <div class="card-body">
+          <h6 class="card-title">Khách hàng</h6>
+          <p class="card-value" th:text="${countUser}"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Giá trị đơn hàng trung bình -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card p-3">
+        <div class="card-body">
+          <h6 class="card-title">AVG đơn hàng</h6>
+          <p
+            class="card-value"
+            th:text="${#numbers.formatDecimal(avgOrder, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+          ></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+package poly.edu.Assignment.Controller.account;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import poly.edu.Assignment.utils.AuthService;
+@Controller
+public class Login {
+    @Autowired
+    private AuthService authService;
+
+    @GetMapping("/login")
+    public String login(Model model){
+        model.addAttribute("view", "account/login");
+        return "account/layout";
+    }
+    
+
+    @PostMapping("/login")
+    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+        if(username.isEmpty()||password.isEmpty()){
+            model.addAttribute("error", "Chưa nhập đầy đủ thông tin!");
+            model.addAttribute("view", "account/login");
+            return "account/layout"; 
+        }
+        if (authService.login(username, password)) {
+            return "redirect:/home"; 
+        } else {
+            model.addAttribute("error", "Sai tài khoản hoặc mật khẩu!");
+            model.addAttribute("view", "account/login");
+            return "account/layout";        }
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        authService.logout();
+        return "redirect:/home";
+    }
+   
+
+}
+

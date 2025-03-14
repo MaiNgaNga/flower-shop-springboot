@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phóng To Hình Ảnh</title>
+
+    <style>
+      .zoom-btn {
+        position: absolute;
+        bottom: 10px;
+        left: 22px;
+        background-color: #54b2c0;
+        color: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+      }
+      .zoom-btn:hover {
+        background-color: #76b1ba;
+      }
+      .img-fluid {
+        cursor: pointer;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      .product {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .product-title {
+        color: #009688;
+        font-weight: bold;
+      }
+
+      .product-color i {
+        color: #009688;
+      }
+
+      .product-price {
+        font-weight: bold;
+        font-size: 24px;
+        color: black;
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+      }
+
+      .btn-order {
+        background-color: #009688;
+        color: white;
+        font-weight: bold;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        width: 200px;
+      }
+
+      .btn-order:hover {
+        background-color: #529890;
+      }
+
+      .btn-order i {
+        margin-right: 5px;
+      }
+
+      .btn-cart {
+        background-color: #558b62;
+        color: white;
+        font-weight: bold;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        width: 200px;
+      }
+
+      .btn-cart:hover {
+        background-color: #6a9373;
+      }
+
+      .star-link {
+        text-decoration: none;
+        color: #009688;
+        font-size: 18px;
+      }
+
+      .star-link:hover {
+        color: #00796b;
+      }
+
+      .btn-cart i {
+        margin-right: 5px;
+      }
+
+      .custom-card h4 {
+        font-size: 14px;
+        color: #009688;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .custom-card p {
+        line-height: 1.2;
+        text-align: left;
+        font-size: 0.8rem;
+        font-style: italic;
+        margin-bottom: 10px;
+      }
+
+      .custom-card ul {
+        list-style: none;
+        padding-left: 0;
+      }
+      .custom-card ul li {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+      }
+
+      .custom-card ul li i {
+        color: #009688;
+        margin-right: 10px;
+      }
+
+      .divider {
+        width: 50px;
+        height: 3px;
+        background-color: #ddd;
+        margin: 10px auto;
+      }
+
+      .text-highlight {
+        color: #009688;
+        font-weight: bold;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .custom-card ul li i {
+        font-size: 0.8rem;
+        margin-right: 8px;
+      }
+
+      p {
+        color: #666666;
+      }
+
+      .accordion-button {
+        color: #666666;
+        background-color: #f8f9fa;
+      }
+
+      .accordion-button:not(.collapsed) {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .accordion-body {
+        color: #666666;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .accordion-button {
+        background-color: #fff;
+        border-top: 2px solid #ddd;
+        position: relative;
+        padding-left: 35px;
+      }
+
+      .accordion-button:hover {
+        color: #009688;
+      }
+
+      /* Mũi tên bên trái */
+      .accordion-button::before {
+        content: "\f107";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        position: absolute;
+        left: 10px;
+        transition: transform 0.3s ease;
+      }
+
+      .accordion-button:not(.collapsed)::before {
+        transform: rotate(180deg);
+      }
+
+      .accordion-item {
+        border: none;
+      }
+
+      .accordion-button::after {
+        display: none !important;
+      }
+
+      .hinhanh img {
+        max-width: 500px;
+      }
+
+      /* Định dạng phần đánh giá */
+      .accordion-item {
+        background: white;
+      }
+
+      /* Tiêu đề đánh giá */
+      h4 {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      /* Bố cục đánh giá */
+      .commentlist {
+        list-style: none;
+        padding: 0;
+      }
+
+      .review-item {
+        border-bottom: 1px solid #ddd;
+        padding: 15px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Avatar người đánh giá */
+      .review-avatar img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+
+      /* Nội dung đánh giá */
+      .comment-container {
+        display: flex;
+        align-items: center;
+      }
+
+      .review-content {
+        flex-grow: 1;
+      }
+
+      /* Định dạng ngôi sao */
+      .star-rating {
+        font-size: 16px;
+        color: #009688;
+      }
+
+      .meta {
+        font-size: 14px;
+        color: #666;
+        margin: 5px 0;
+      }
+
+      .review-author {
+        font-weight: bold;
+        color: #333;
+      }
+
+      .review-date {
+        color: #888;
+        font-size: 12px;
+      }
+
+      /* Định dạng nội dung đánh giá */
+      .review-text {
+        font-size: 14px;
+        color: #333;
+        margin-top: 5px;
+      }
+
+      .star-rating i {
+        margin-right: -2px; /* Làm sát icon sao */
+      }
+    </style>
+  </head>
+  <body>
+    <th:block th:object="${product}">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-5 position-relative">
+            <img
+              th:src="@{/images/{image}(image=*{image_url})}"
+              id="mainImage"
+              alt="Hoa "
+              class="img-fluid rounded-3"
+              data-bs-toggle="modal"
+              data-bs-target="#imageModal"
+            />
+          </div>
+          <div class="col-md-5 product">
+            <h4 class="product-title" th:text="*{name}"></h4>
+             
+            <p class="product-price" th:text="*{price}+VND"></p>
+            <div class="button-group">
+              <form th:action="@{/cart/add}" method="post">
+              <input type="hidden" name="productId" th:value="${product.id}" />
+              <input type="number" name="quantity" value="1" step="1" min="1" class="btn btn-light w-3 m-3"> <br>
+              <button type="submit" class="btn-order btn btn-sm">
+                   Thêm vào giỏ hàng
+              </button>
+              </form>
+          </div>
+            <div class="mt-3 card bg-light border-0 p-3">
+              <div class="custom-card">
+                <h4>Đặc thù sản phẩm</h4>
+                <p>
+                  Hoa tươi là sản phẩm tự nhiên, nghệ thuật và
+                  <strong>thủ công</strong> nên hoa thành phẩm sẽ chỉ giống 80 -
+                  90% so với hình ảnh sẵn có.
+                </p>
+                <p>
+                  Một số hoa, lá phụ / phụ kiện trên mẫu có thể thay đổi tùy
+                  thuộc vào tài nguyên đang có ở shop.
+                </p>
+                <p>
+                  Màu sắc của hoa thực tế có thể thay đổi chút ít so với hình
+                  ảnh (Màu sắc hiển thị khác nhau trên từng màn hình thiết bị,
+                  góc chụp, ánh sáng).
+                </p>
+
+                <div class="divider"></div>
+
+                <h5 class="text-highlight">
+                  Tại sao nên đặt hoa tại Trạm Hoa ?
+                </h5>
+                <div>
+                  <p>
+                    <i class="fas fa-camera me-2 text-success"></i> Chụp hình
+                    ảnh hoa thực tế trước khi giao
+                  </p>
+                  <p>
+                    <i class="fas fa-file-invoice me-2 text-success"></i> Xuất
+                    hóa đơn GTGT +8% (Giá chưa gồm VAT)
+                  </p>
+
+                  <p>
+                    <i class="fas fa-gift me-2 text-success"></i> Tặng kèm bảng
+                    tên công ty, thiệp nội dung
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+        <div class="accordion mt-5 mt-5" id="productAccordion">
+          <!-- Mô tả -->
+          <div class="accordion-item rounded-0">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button rounded-0"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+              >
+                Mô tả
+              </button>
+            </h2>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              data-bs-parent="#productAccordion"
+            >
+              <div class="accordion-body">
+                <p th:text="*{description}"></p>
+
+                <p class="hinhanh d-flex justify-content-center">
+                  <img
+                    src="/photos/vungvang.webp"
+                    alt=""
+                    class="card-img-top"
+                  />
+                </p>
+                <p><strong>Những ưu đãi khi đặt hoa tại Trạm Hoa</strong></p>
+                <ul>
+                  <li>
+                    Miễn phí các phụ kiện tặng kèm (thiệp, băng rôn, bảng tên,
+                    thông điệp,…)
+                  </li>
+                  <li>
+                    Chụp ảnh hoa thật trước khi giao để đảm bảo hài lòng khách
+                    hàng
+                  </li>
+                  <li>
+                    Miễn phí giao hoa nội thành toàn quốc 63/63 tỉnh thành phố
+                  </li>
+                  <li>
+                    Giao hoa tươi gấp trong vòng 2 giờ kể từ khi đặt hàng.
+                  </li>
+                  <li>
+                    Nhiều ưu đãi giảm giá cho khách hàng thành viên, đặt hoa
+                    thường xuyên tại Trạm Hoa
+                  </li>
+                </ul>
+                <h6 class="text-dark fw-bold">Lưu ý</h6>
+                <ul>
+                  <li>
+                    Tùy khu vực, tùy mùa hoa, thời tiết nên sẽ có thay đổi đối
+                    với mẫu hoa, trước khi thực hiện thay đổi sẽ báo trước cho
+                    khách hàng.
+                  </li>
+                  <li>
+                    Hoa tươi vào những ngày lễ: Valentine, Quốc tế phụ nữ, Phụ
+                    nữ Việt Nam, Giáng sinh, Tết,… giá hoa sẽ tăng dao động từ
+                    20-30%. Thời điểm tăng giá hoa sẽ được tính từ 3 ngày trước
+                    khi lễ.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- Đánh giá -->
+          <div class="accordion-item rounded-0">
+            <h2 class="accordion-header">
+              <button
+                class="accordion-button collapsed rounded-0"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseThree"
+              >
+                Đánh giá
+              </button>
+            </h2>
+            <div
+              id="collapseThree"
+              class="accordion-collapse collapse"
+              data-bs-parent="#productAccordion"
+            >
+              <div class="accordion-body row">
+                <div class="col-md-7">
+                 
+                  <ol class="commentlist" th:each="item:${comments}">
+                    <li class="review-item">
+                      <div class="comment-container">
+                        <div class="review-avatar">
+                          <img
+                            src="https://secure.gravatar.com/avatar/243ae3f73ccca3927fd8f14149f75936?s=60&d=mm&r=g"
+                            alt="Avatar"
+                          />
+                        </div>
+                        <div class="review-content">
+                          <p class="meta">
+                            <strong class="review-author" th:text="${item.user.name}"></strong> -
+                            <time class="review-date" th:text="${#temporals.format(item.createdAt, 'dd/MM/yyyy')}"></time>
+                          </p>
+                          <p class="review-text" th:text="${item.content}">
+                            Tư vấn nhiệt tình, dịch vụ khá hài lòng.
+                          </p>
+                        </div>
+                      </div>
+                    </li>
+                    
+                  </ol>
+                </div>
+                <div class="col-md-5">
+                  <div class="card p-4">
+                    <h4 class="fw-bold">Thêm đánh giá</h4>
+                    <i class="error text-danger" th:if="${error}" th:text="${error}"></i>
+                    <form th:action="@{/detail/comment}" method="post">
+                      <div class="mb-3">
+                          <label for="comment" class="form-label fw-bolder small">Nhận xét của bạn <span class="text-danger">*</span></label>
+                          <textarea id="comment" name="comment" class="form-control" rows="3" ></textarea>
+                          <input type="hidden" name="productId" th:value="${product.id}">
+                      </div>
+                      <div class="d-flex justify-content-center"  th:if="${session.user}">
+                          <button
+                            type="submit" class="btn btn-sm btn-primary w-25 mt-3 fw-bolder">GỬI ĐI</button>
+                      </div>
+                      <div class="d-flex justify-content-center"  th:if="!${session.user}">
+                         <i>(Đăng nhập để bình luận)</i>
+                    </div>
+
+                  </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </th:block>
+  </body>
+</html>

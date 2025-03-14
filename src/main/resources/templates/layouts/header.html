@@ -1,0 +1,84 @@
+<header class="container-fluid">
+  <div class="row align-items-center">
+    <div class="col-3"></div>
+
+    <div class="col-6 text-center">
+      <a class="navbar-brand" href="/home">
+        <img th:src="@{/images/logo.png}" alt="Trạm Hoa" height="80" />
+      </a>
+    </div>
+
+    <div class="col-3 d-flex justify-content-end align-items-center">
+      <a href="/cart" class="btn">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </a>
+
+      <button
+        class="btn dropdown-toggle px-2"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <i class="fa-solid fa-user"></i>
+      </button>
+      <ul class="dropdown-menu" th:if="${session.user == null}">
+        <li>
+          <a href="/login" class="btn">Đăng nhập</a>
+        </li>
+        <li>
+          <a href="/signup" class="btn">Đăng kí</a>
+        </li>
+      </ul>
+      <ul class="dropdown-menu" th:if="${session.user != null}">
+        <li th:if="${session.user.role}">
+          <a class="dropdown-item" href="/User/index">Quản trị</a>
+        </li>
+        <li>
+          <a class="dropdown-item" href="/history">Lịch sử mua hàng</a>
+        </li>
+
+        <li><a class="dropdown-item" href="/editProfile">Hồ sơ</a></li>
+        <li><a class="dropdown-item" href="/changPassword">Đổi mật khẩu</a></li>
+
+        <li><hr class="dropdown-divider" /></li>
+        <li>
+          <a class="dropdown-item text-danger" href="/logout">Đăng xuất</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+<!-- nav -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm text-size">
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarNav"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link fw-bold mau" href="/home" id="hoaKhaiTruong">
+          🌸 Trang chủ
+        </a>
+      </li>
+      <th:block th:if="${productCategories != null}">
+        <th:block
+          th:each="pc, item: ${productCategories} "
+          th:if="${item.index < 8}"
+        >
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              th:href="@{/ProductUser(id=${pc.id})}"
+              th:text="${pc.name}"
+            ></a>
+          </li>
+        </th:block>
+      </th:block>
+    </ul>
+  </div>
+</nav>

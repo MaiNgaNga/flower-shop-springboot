@@ -1,0 +1,44 @@
+package poly.edu.Assignment.model;
+
+import jakarta.persistence.*;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "comments")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Comment {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull(message = "Đăng nhập để bình luận")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @NotBlank(message = "Nội dung không được để trống") 
+    @Column(columnDefinition = "NVARCHAR(255)")
+    private String content;
+
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+
+ 
+
+    
+}
