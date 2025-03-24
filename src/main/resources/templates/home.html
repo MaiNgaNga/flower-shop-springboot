@@ -31,27 +31,18 @@
   </div>
   <div class="divider"></div>
 </div>
-<div
-  class="py-3"
-  style="
+<div class="py-3" style="
     background: linear-gradient(to right, white, #caf0d4);
     border-radius: 8px;
-  "
->
+  ">
   <h4 class="text-center mau fw-bold">Mẫu hoa mới nhất</h4>
   <div class="d-flex justify-content-between">
     <th:block th:each="pc:${productCategories}">
       <th:block th:each="p:${lastProducts}">
         <th:block th:if="${p.productCategory.id == pc.id}">
           <div class="text-center p-2">
-            <a th:href="@{/detail(id=${p.id})}"
-              ><img
-                th:src="@{/images/{x}(x=${p.image_url})}"
-                class="rounded-circle py-2 product-title"
-                alt="Product Image"
-                height="150px"
-                width="120px"
-            /></a>
+            <a th:href="@{/detail(id=${p.id})}"><img th:src="@{/images/{x}(x=${p.image_url})}"
+                class="rounded-circle py-2 product-title" alt="Product Image" height="150px" width="120px" /></a>
             <h6 th:text="${pc.name}"></h6>
           </div>
         </th:block>
@@ -64,20 +55,12 @@
     <div class="row d-flex justify-content-center text-center">
       <th:block th:each="p,item:${softByQuantitys}">
         <th:block th:if="${item.index}<2">
-          <div
-            class="col-6 d-flex justify-content-center align-items-center flower-item"
-          >
+          <div class="col-6 d-flex justify-content-center align-items-center flower-item">
             <a th:href="@{/detail(id=${p.id})}">
-              <img
-                th:src="@{/images/{x}(x=${p.image_url})}"
-                width="200px"
-                class="img-fluid shadow-lg hover-shadow"
-                alt="Hoa tươi 1"
-              />
+              <img th:src="@{/images/{x}(x=${p.image_url})}" width="200px" class="img-fluid shadow-lg hover-shadow"
+                alt="Hoa tươi 1" />
               <div class="price-tag">
-                <span
-                  th:text="${#numbers.formatDecimal(p.price/ 1000, 0, 'COMMA', 0, 'POINT')+'k'}"
-                ></span>
+                <span th:text="${#numbers.formatDecimal(p.price/ 1000, 0, 'COMMA', 0, 'POINT')+'k'}"></span>
               </div>
             </a>
           </div>
@@ -87,20 +70,12 @@
     <div class="row d-flex justify-content-center text-center mt-3">
       <th:block th:each="p,item:${softByQuantitys}">
         <th:block th:if="(${item.index} <4 ) and (${item.index} > 1)">
-          <div
-            class="col-6 d-flex justify-content-center align-items-center flower-item"
-          >
+          <div class="col-6 d-flex justify-content-center align-items-center flower-item">
             <a th:href="@{/detail(id=${p.id})}">
-              <img
-                th:src="@{/images/{x}(x=${p.image_url})}"
-                width="200px"
-                class="img-fluid shadow-lg hover-shadow"
-                alt="Hoa tươi 1"
-              />
+              <img th:src="@{/images/{x}(x=${p.image_url})}" width="200px" class="img-fluid shadow-lg hover-shadow"
+                alt="Hoa tươi 1" />
               <div class="price-tag">
-                <span
-                  th:text="${#numbers.formatDecimal(p.price/ 1000, 0, 'COMMA', 0, 'POINT')+'k'}"
-                ></span>
+                <span th:text="${#numbers.formatDecimal(p.price/ 1000, 0, 'COMMA', 0, 'POINT')+'k'}"></span>
               </div>
             </a>
           </div>
@@ -120,7 +95,7 @@
     </p>
     <div class="row m-4" style="color: rgb(11, 11, 113)">
       <div class="col-lg-6">
-        <h6>Mua từ 2 sản phẩm giảm giá <b>10%</b></h6>
+        <h6>Mua từ 3 sản phẩm giảm giá <b>10%</b></h6>
         <h6>Free ship nội thành</h6>
       </div>
       <div class="col-lg-6">
@@ -130,13 +105,10 @@
     <button class="btn btn-danger m-4">Xem chi tiết</button>
   </div>
 </section>
-<div
-  class="py-3"
-  style="
+<div class="py-3" style="
     background: linear-gradient(to right, white, #caf0d4);
     border-radius: 8px;
-  "
->
+  ">
   <h4 class="text-center mau fw-bold">Mẫu hoa số lượng nhiều</h4>
   <div class="d-flex justify-content-between">
     <th:block th:each="pc:${productCategories}">
@@ -144,14 +116,8 @@
         <th:block th:if="${p.productCategory.id == pc.id}">
           <div class="text-center p-2">
             <th:block th:if="${item.index}<8">
-              <a th:href="@{/detail(id=${p.id})}"
-                ><img
-                  th:src="@{/images/{x}(x=${p.image_url})}"
-                  class="rounded-circle py-2 product-title"
-                  alt="Product Image"
-                  height="150px"
-                  width="120px"
-              /></a>
+              <a th:href="@{/detail(id=${p.id})}"><img th:src="@{/images/{x}(x=${p.image_url})}"
+                  class="rounded-circle py-2 product-title" alt="Product Image" height="150px" width="120px" /></a>
               <h6 th:text="${pc.name}"></h6>
             </th:block>
           </div>
@@ -160,12 +126,10 @@
     </th:block>
   </div>
 </div>
-<div
-  style="
+<div style="
     background: linear-gradient(to bottom, white, #b9e2f4);
     border-radius: 8px;
-  "
->
+  ">
   <div class="p-3">
     <h4 class="text-center mau fw-bold py-4">Bó hoa tươi</h4>
 
@@ -174,21 +138,12 @@
         <div class="col-md-2" th:if="${item.index}<6">
           <a th:href="@{/detail(id=${p.id})}" class="text-decoration-none">
             <div class="card border-0 text-center">
-              <img
-                th:src="@{/images/{x}(x=${p.image_url})}"
-                alt="h1"
-                class="card-img-top rounded-3 hover-effect"
-              />
+              <img th:src="@{/images/{x}(x=${p.image_url})}" alt="h1" class="card-img-top rounded-3 hover-effect" />
               <div class="card-body p-2">
                 <span class="text-muted d-block small" th:text="${p.id}"></span>
-                <h6
-                  class="fw-bold text-success product-title"
-                  th:text="${p.name}"
-                ></h6>
+                <h6 class="fw-bold text-success product-title" th:text="${p.name}"></h6>
                 <p class="fw-bold text-dark small">
-                  <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
+                  <span th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"></span>
                   VND
                 </p>
               </div>
@@ -205,21 +160,12 @@
         <div class="col-md-2" th:if="${item.index}<6">
           <a th:href="@{/detail(id=${p.id})}" class="text-decoration-none">
             <div class="card border-0 text-center">
-              <img
-                th:src="@{/images/{x}(x=${p.image_url})}"
-                alt="h1"
-                class="card-img-top rounded-3 hover-effect"
-              />
+              <img th:src="@{/images/{x}(x=${p.image_url})}" alt="h1" class="card-img-top rounded-3 hover-effect" />
               <div class="card-body p-2">
                 <span class="text-muted d-block small" th:text="${p.id}"></span>
-                <h6
-                  class="fw-bold text-success product-title"
-                  th:text="${p.name}"
-                ></h6>
+                <h6 class="fw-bold text-success product-title" th:text="${p.name}"></h6>
                 <p class="fw-bold text-dark small">
-                  <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
+                  <span th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"></span>
                   VND
                 </p>
               </div>
@@ -237,21 +183,12 @@
         <div class="col-md-2" th:if="${item.index}<6">
           <a th:href="@{/detail(id=${p.id})}" class="text-decoration-none">
             <div class="card border-0 text-center">
-              <img
-                th:src="@{/images/{x}(x=${p.image_url})}"
-                alt="h1"
-                class="card-img-top rounded-3 hover-effect"
-              />
+              <img th:src="@{/images/{x}(x=${p.image_url})}" alt="h1" class="card-img-top rounded-3 hover-effect" />
               <div class="card-body p-2">
                 <span class="text-muted d-block small" th:text="${p.id}"></span>
-                <h6
-                  class="fw-bold text-success product-title"
-                  th:text="${p.name}"
-                ></h6>
+                <h6 class="fw-bold text-success product-title" th:text="${p.name}"></h6>
                 <p class="fw-bold text-dark small">
-                  <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
+                  <span th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"></span>
                   VND
                 </p>
               </div>
@@ -270,21 +207,12 @@
         <div class="col-md-2" th:if="${item.index}<6">
           <a th:href="@{/detail(id=${p.id})}" class="text-decoration-none">
             <div class="card border-0 text-center">
-              <img
-                th:src="@{/images/{x}(x=${p.image_url})}"
-                alt="h1"
-                class="card-img-top rounded-3 hover-effect"
-              />
+              <img th:src="@{/images/{x}(x=${p.image_url})}" alt="h1" class="card-img-top rounded-3 hover-effect" />
               <div class="card-body p-2">
                 <span class="text-muted d-block small" th:text="${p.id}"></span>
-                <h6
-                  class="fw-bold text-success product-title"
-                  th:text="${p.name}"
-                ></h6>
+                <h6 class="fw-bold text-success product-title" th:text="${p.name}"></h6>
                 <p class="fw-bold text-dark small">
-                  <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
+                  <span th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"></span>
                   VND
                 </p>
               </div>
