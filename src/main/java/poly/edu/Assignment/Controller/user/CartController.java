@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import poly.edu.Assignment.Service.CartItemService;
+import poly.edu.Assignment.Service.DiscountService;
 import poly.edu.Assignment.Service.ProductCategoryService;
 import poly.edu.Assignment.model.CartItem;
 import poly.edu.Assignment.model.User;
@@ -24,6 +25,8 @@ public class CartController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private DiscountService discountService; 
 
     @GetMapping
     public String viewCart(Model model) {
@@ -33,6 +36,12 @@ public class CartController {
 
         Integer userId=user.getId();
         List<CartItem> cartItems = cartItemService.getCartItemsByUserId(userId);
+
+         // Cập nhật giá từng sản phẩm trong giỏ hàng dựa vào giảm giá
+         for (CartItem item : cartItems) {
+            double discountedPrice = discountService.getDiscountedPrice(item.getProduct());
+            item.setPrice(discountedPrice); // Cập nhật giá trong giỏ hàng
+        }
         
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("totalAmount", cartItemService.getTotalAmount(userId));

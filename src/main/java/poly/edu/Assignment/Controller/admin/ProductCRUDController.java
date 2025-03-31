@@ -1,5 +1,6 @@
 package poly.edu.Assignment.Controller.admin;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 import poly.edu.Assignment.Service.CategoryService;
 import poly.edu.Assignment.Service.ColorService;
+import poly.edu.Assignment.Service.DiscountService;
 import poly.edu.Assignment.Service.ProductCategoryService;
 import poly.edu.Assignment.Service.ProductService;
 import poly.edu.Assignment.model.Category;
 import poly.edu.Assignment.model.Color;
+import poly.edu.Assignment.model.Discount;
 import poly.edu.Assignment.model.Product;
 import poly.edu.Assignment.model.ProductCategory;
 
@@ -40,6 +43,9 @@ public class ProductCRUDController {
     @Autowired
     ProductCategoryService productCategoryService;
 
+    @Autowired
+    DiscountService discountService;
+    
     @ModelAttribute("products")
     public List<Product> getAllProducts() {
         return productService.findAll();
@@ -70,6 +76,10 @@ public class ProductCRUDController {
     public String create(Model model, 
                          @Valid @ModelAttribute("product") Product product, Errors errors,
                          @RequestParam("imageFile") MultipartFile imageFile,
+                         @RequestParam(value = "discountType", required = false) String discountType,
+                         @RequestParam(value = "discountValue", required = false) Double discountValue,
+                         @RequestParam(value = "startDate", required = false) String startDate,
+                         @RequestParam(value = "endDate", required = false) String endDate,
                          RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
             model.addAttribute("view", "admin/ProductCRUD");
@@ -77,6 +87,17 @@ public class ProductCRUDController {
         }
         try {
             productService.create(product, imageFile);
+             // Nếu người dùng nhập giảm giá thì tạo giảm giá
+        if (discountType != null && discountValue != null && startDate != null && endDate != null) {
+            Discount discount = new Discount();
+            discount.setProduct(product);
+            discount.setDiscountType(discountType);
+            discount.setDiscountValue(discountValue);
+            discount.setStartDate(LocalDateTime.parse(startDate));
+            discount.setEndDate(LocalDateTime.parse(endDate));
+            discount.setStatus(true);
+            discountService.save(discount);
+        }
             redirectAttributes.addFlashAttribute("success", "Thêm sản phẩm thành công!");
             return "redirect:/Product/index";
         } catch (IllegalArgumentException e) {
@@ -97,8 +118,13 @@ public class ProductCRUDController {
 
     @PostMapping("/update")
     public String update(Model model,  @Valid @ModelAttribute("product") Product product,Errors errors,
-                         @RequestParam(value="imageFile", required = false) MultipartFile imageFile ,     @RequestParam(value = "oldImage", required = false) String oldImage,
-                          RedirectAttributes redirectAttributes) {
+                         @RequestParam(value="imageFile", required = false) MultipartFile imageFile , 
+                         @RequestParam(value = "oldImage", required = false) String oldImage,
+                         @RequestParam(value = "discountType", required = false) String discountType,
+                         @RequestParam(value = "discountValue", required = false) Double discountValue,
+                         @RequestParam(value = "startDate", required = false) String startDate,
+                         @RequestParam(value = "endDate", required = false) String endDate,
+                         RedirectAttributes redirectAttributes) {
         if (errors.hasErrors()) {
             model.addAttribute("view", "admin/ProductCRUD");
             return "admin/layout";
@@ -106,6 +132,21 @@ public class ProductCRUDController {
         try {
           
             productService.update(product, imageFile,oldImage);
+
+            // Kiểm tra nếu người dùng muốn cập nhật hoặc thêm giảm giá mới
+            if (discountType != null && discountValue != null && startDate != null && endDate != null) {
+                Discount discount = discountService.findByProduct(product);
+                if (discount == null) {
+                    discount = new Discount();
+                    discount.setProduct(product);
+                }
+                discount.setDiscountType(discountType);
+                discount.setDiscountValue(discountValue);
+                discount.setStartDate(LocalDateTime.parse(startDate));
+                discount.setEndDate(LocalDateTime.parse(endDate));
+                discount.setStatus(true);
+                discountService.save(discount);
+            }
             redirectAttributes.addFlashAttribute("success", "Cập nhật sản phẩm thành công!");
             return "redirect:/Product/edit/" + product.getId();
            

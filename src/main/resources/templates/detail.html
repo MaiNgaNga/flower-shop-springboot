@@ -306,7 +306,21 @@
           <div class="col-md-5 product">
             <h4 class="product-title" th:text="*{name}"></h4>
              
-            <p class="product-price" th:text="*{price}+VND"></p>
+            <p class="product-price">
+              <span th:if="*{getDiscountPrice() != price}">
+                  <span class="text-muted text-decoration-line-through">
+                      <span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span> VND
+                  </span>
+                  <br />
+                  <span class="text-danger fw-bold fs-4">
+                      <span th:text="*{#numbers.formatDecimal(getDiscountPrice(), 0, 'COMMA', 0, 'POINT')}"></span> VND
+                  </span>
+              </span>
+              <span th:unless="*{getDiscountPrice() != price}" class="fw-bold text-dark fs-4">
+                  <span th:text="*{#numbers.formatDecimal(price, 0, 'COMMA', 0, 'POINT')}"></span> VND
+              </span>
+          </p>
+          
             <div class="button-group">
               <form th:action="@{/cart/add}" method="post">
               <input type="hidden" name="productId" th:value="${product.id}" />

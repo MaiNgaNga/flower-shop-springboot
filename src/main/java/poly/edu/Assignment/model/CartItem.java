@@ -1,8 +1,11 @@
 package poly.edu.Assignment.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
+import poly.edu.Assignment.Service.DiscountService;
 
 @Entity
 @Table(name = "cart_items")
@@ -28,7 +31,15 @@ public class CartItem {
 
     private double price; 
     
+    @Autowired
+    @Transient
+    private DiscountService discountService; // Inject DiscountService để lấy giá giảm
+
+    public double getDiscountedPrice() {
+        return discountService != null ? discountService.getDiscountedPrice(product) : price;
+    }
+
     public double getTotal() {
-        return price * quantity;
+        return getDiscountedPrice() * quantity;
     }
 }

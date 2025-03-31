@@ -74,10 +74,27 @@
                 class="img-fluid shadow-lg hover-shadow"
                 alt="Hoa tươi 1"
               />
-              <div class="price-tag">
-                <span
-                  th:text="${#numbers.formatDecimal(p.price/ 1000, 0, 'COMMA', 0, 'POINT')+'k'}"
-                ></span>
+              <div class="price-tag text-center">
+                <th:block th:if="${p.getDiscountPrice() != p.price}">
+                  <span class="text-muted text-decoration-line-through">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price / 1000, 0, 'COMMA', 0, 'POINT') + 'k'}"
+                    ></span>
+                  </span>
+                  <br />
+                  <span class="text-danger fw-bold">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.getDiscountPrice() / 1000, 0, 'COMMA', 0, 'POINT') + 'k'}"
+                    ></span>
+                  </span>
+                </th:block>
+                <th:block th:unless="${p.getDiscountPrice() != p.price}">
+                  <span class="fw-bold text-white">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price / 1000, 0, 'COMMA', 0, 'POINT') + 'k'}"
+                    ></span>
+                  </span>
+                </th:block>
               </div>
             </a>
           </div>
@@ -97,10 +114,27 @@
                 class="img-fluid shadow-lg hover-shadow"
                 alt="Hoa tươi 1"
               />
-              <div class="price-tag">
-                <span
-                  th:text="${#numbers.formatDecimal(p.price/ 1000, 0, 'COMMA', 0, 'POINT')+'k'}"
-                ></span>
+              <div class="price-tag text-center">
+                <th:block th:if="${p.getDiscountPrice() != p.price}">
+                  <span class="text-muted text-decoration-line-through">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price / 1000, 0, 'COMMA', 0, 'POINT') + 'k'}"
+                    ></span>
+                  </span>
+                  <br />
+                  <span class="text-danger fw-bold">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.getDiscountPrice() / 1000, 0, 'COMMA', 0, 'POINT') + 'k'}"
+                    ></span>
+                  </span>
+                </th:block>
+                <th:block th:unless="${p.getDiscountPrice() != p.price}">
+                  <span class="fw-bold text-white">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price / 1000, 0, 'COMMA', 0, 'POINT') + 'k'}"
+                    ></span>
+                  </span>
+                </th:block>
               </div>
             </a>
           </div>
@@ -186,10 +220,29 @@
                   th:text="${p.name}"
                 ></h6>
                 <p class="fw-bold text-dark small">
+                  <span th:if="${p.getDiscountPrice() != p.price}">
+                    <span class="text-muted text-decoration-line-through">
+                      <span
+                        th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
+                      ></span>
+                      VND
+                    </span>
+                    <br />
+                    <span
+                      th:text="${#numbers.formatDecimal(p.getDiscountPrice(), 0, 'COMMA', 0, 'POINT')}"
+                      class="text-danger fw-bold"
+                    ></span>
+                    VND
+                  </span>
                   <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
-                  VND
+                    th:unless="${p.getDiscountPrice() != p.price}"
+                    class="fw-bold text-dark"
+                  >
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
+                    ></span>
+                    VND
+                  </span>
                 </p>
               </div>
             </div>
@@ -217,10 +270,29 @@
                   th:text="${p.name}"
                 ></h6>
                 <p class="fw-bold text-dark small">
+                  <span th:if="${p.getDiscountPrice() != p.price}">
+                    <span class="text-muted text-decoration-line-through">
+                      <span
+                        th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
+                      ></span>
+                      VND
+                    </span>
+                    <br />
+                    <span
+                      th:text="${#numbers.formatDecimal(p.getDiscountPrice(), 0, 'COMMA', 0, 'POINT')}"
+                      class="text-danger fw-bold"
+                    ></span>
+                    VND
+                  </span>
                   <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
-                  VND
+                    th:unless="${p.getDiscountPrice() != p.price}"
+                    class="fw-bold text-dark"
+                  >
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
+                    ></span>
+                    VND
+                  </span>
                 </p>
               </div>
             </div>
@@ -249,10 +321,29 @@
                   th:text="${p.name}"
                 ></h6>
                 <p class="fw-bold text-dark small">
+                  <span th:if="${p.getDiscountPrice() != p.price}">
+                    <span class="text-muted text-decoration-line-through">
+                      <span
+                        th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
+                      ></span>
+                      VND
+                    </span>
+                    <br />
+                    <span
+                      th:text="${#numbers.formatDecimal(p.getDiscountPrice(), 0, 'COMMA', 0, 'POINT')}"
+                      class="text-danger fw-bold"
+                    ></span>
+                    VND
+                  </span>
                   <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
-                  VND
+                    th:unless="${p.getDiscountPrice() != p.price}"
+                    class="fw-bold text-dark"
+                  >
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
+                    ></span>
+                    VND
+                  </span>
                 </p>
               </div>
             </div>
@@ -261,8 +352,7 @@
       </th:block>
     </div>
   </div>
-  <!-- 
-     -->
+  <!-- -->
   <div class="p-3">
     <h4 class="text-center mau fw-bold py-4">Hoa khai trương</h4>
     <div class="row">
@@ -282,10 +372,29 @@
                   th:text="${p.name}"
                 ></h6>
                 <p class="fw-bold text-dark small">
+                  <span th:if="${p.getDiscountPrice() != p.price}">
+                    <span class="text-muted text-decoration-line-through">
+                      <span
+                        th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
+                      ></span>
+                      VND
+                    </span>
+                    <br />
+                    <span
+                      th:text="${#numbers.formatDecimal(p.getDiscountPrice(), 0, 'COMMA', 0, 'POINT')}"
+                      class="text-danger fw-bold"
+                    ></span>
+                    VND
+                  </span>
                   <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
-                  VND
+                    th:unless="${p.getDiscountPrice() != p.price}"
+                    class="fw-bold text-dark"
+                  >
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
+                    ></span>
+                    VND
+                  </span>
                 </p>
               </div>
             </div>

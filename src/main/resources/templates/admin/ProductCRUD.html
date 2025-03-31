@@ -162,6 +162,63 @@
           </div>
         </div>
 
+        <div class="mb-2 mt-2">
+          <input
+            type="checkbox"
+            id="applyDiscount"
+            onchange="toggleDiscountFields()"
+          />
+          <label for="applyDiscount">Áp dụng giảm giá</label>
+        </div>
+
+        <div id="discountFields" style="display: none">
+          <div class="row">
+            <div class="col-md-6">
+              <label for="discountType" class="form-label">Loại Giảm Giá</label>
+              <select
+                id="discountType"
+                name="discountType"
+                class="form-control form-control-sm"
+              >
+                <option value="percent">Phần trăm</option>
+                <option value="fixed">Giảm giá cố định</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label for="discountValue" class="form-label">Giá Trị Giảm</label>
+              <input
+                type="number"
+                id="discountValue"
+                name="discountValue"
+                class="form-control form-control-sm"
+                placeholder="Nhập giá trị giảm"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <label for="startDate" class="form-label">Ngày Bắt Đầu</label>
+              <input
+                type="datetime-local"
+                id="startDate"
+                name="startDate"
+                class="form-control form-control-sm"
+              />
+            </div>
+            <div class="col-md-6">
+              <label for="endDate" class="form-label">Ngày Kết Thúc</label>
+              <input
+                type="datetime-local"
+                id="endDate"
+                name="endDate"
+                class="form-control form-control-sm"
+              />
+            </div>
+          </div>
+        </div>
+
         <div class="mb-2">
           <label for="image" class="form-label">Hình Ảnh</label>
 
@@ -238,7 +295,8 @@
             <tr>
               <th>ID</th>
               <th>Tên sản phẩm</th>
-              <th>Giá sản phẩm</th>
+              <th>Giá gốc</th>
+              <th>Gía sau giảm</th>
               <th>Số lượng</th>
               <th>Hình Ảnh</th>
               <th>Loại Hoa</th>
@@ -252,6 +310,7 @@
               <td th:text="${item.id}"></td>
               <td th:text="${item.name}"></td>
               <td th:text="${item.price}"></td>
+              <td th:text="${item.getDiscountPrice()}"></td>
               <td th:text="${item.quantity}"></td>
 
               <td>
@@ -287,3 +346,10 @@
     </div>
   </div>
 </main>
+<script>
+  function toggleDiscountFields() {
+    let checkbox = document.getElementById("applyDiscount");
+    let discountFields = document.getElementById("discountFields");
+    discountFields.style.display = checkbox.checked ? "block" : "none";
+  }
+</script>
