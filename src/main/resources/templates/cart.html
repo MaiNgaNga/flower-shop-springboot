@@ -16,8 +16,8 @@
           <tr>
             <th></th>
             <th>SẢN PHẨM</th>
-            <th>GIÁ TIỀN</th>
-            <th>SỐ LƯỢNG</th>
+            <th>GIÁ TIỀN SẢN PHẨM</th>
+            <th>SỐ LƯỢNG SẢN PHẨM</th>
             <th>TẠM TÍNH</th>
           </tr>
         </thead>
@@ -92,7 +92,7 @@
       <h6 class="fw-bold">TỔNG CỘNG GIỎ HÀNG</h6>
       <ul class="list-group">
         <li class="list-group-item d-flex justify-content-between">
-          <span>Tổng Tiền</span>
+          <span>Tổng</span>
           <strong
             id="grand-total"
             th:text="${#numbers.formatDecimal(totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"
