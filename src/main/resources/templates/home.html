@@ -186,10 +186,21 @@
                   th:text="${p.name}"
                 ></h6>
                 <p class="fw-bold text-dark small">
-                  <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
-                  VND
+                  <th:block th:if="${p.priceAfterDiscount lt p.price}">
+                    <span
+                      class="text-danger fw-bold me-2 d-block"
+                      th:text="${#numbers.formatDecimal(p.priceAfterDiscount, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                    <span
+                      class="text-muted text-decoration-line-through d-block"
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
+                  <th:block th:if="${p.priceAfterDiscount eq p.price}">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
                 </p>
               </div>
             </div>
@@ -217,10 +228,21 @@
                   th:text="${p.name}"
                 ></h6>
                 <p class="fw-bold text-dark small">
-                  <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
-                  VND
+                  <th:block th:if="${p.priceAfterDiscount lt p.price}">
+                    <span
+                      class="text-danger fw-bold me-2 d-block"
+                      th:text="${#numbers.formatDecimal(p.priceAfterDiscount, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                    <span
+                      class="text-muted text-decoration-line-through d-block"
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
+                  <th:block th:if="${p.priceAfterDiscount eq p.price}">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
                 </p>
               </div>
             </div>
@@ -249,10 +271,21 @@
                   th:text="${p.name}"
                 ></h6>
                 <p class="fw-bold text-dark small">
-                  <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
-                  VND
+                  <th:block th:if="${p.priceAfterDiscount lt p.price}">
+                    <span
+                      class="text-danger fw-bold me-2 d-block"
+                      th:text="${#numbers.formatDecimal(p.priceAfterDiscount, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                    <span
+                      class="text-muted text-decoration-line-through d-block"
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
+                  <th:block th:if="${p.priceAfterDiscount eq p.price}">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
                 </p>
               </div>
             </div>
@@ -282,10 +315,21 @@
                   th:text="${p.name}"
                 ></h6>
                 <p class="fw-bold text-dark small">
-                  <span
-                    th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')}"
-                  ></span>
-                  VND
+                  <th:block th:if="${p.priceAfterDiscount lt p.price}">
+                    <span
+                      class="text-danger fw-bold me-2 d-block"
+                      th:text="${#numbers.formatDecimal(p.priceAfterDiscount, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                    <span
+                      class="text-muted text-decoration-line-through d-block"
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
+                  <th:block th:if="${p.priceAfterDiscount eq p.price}">
+                    <span
+                      th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
                 </p>
               </div>
             </div>
