@@ -1,6 +1,14 @@
 <div class="container mt-4">
-  <div class="success alert alert-success" th:if="${success}" th:text="${success}"></div>
-  <div class="success alert alert-danger" th:if="${message}" th:text="${message}"></div>
+  <div
+    class="success alert alert-success"
+    th:if="${success}"
+    th:text="${success}"
+  ></div>
+  <div
+    class="success alert alert-danger"
+    th:if="${message}"
+    th:text="${message}"
+  ></div>
   <form th:action="@{/order/checkout}" method="post">
     <div class="row">
       <!-- Cột Thông tin Đặt hàng -->
@@ -10,23 +18,42 @@
 
           <div class="mb-3">
             <label class="form-label">Họ và tên </label>
-            <input type="text" th:value="${user.name}" class="form-control" readonly />
+            <input
+              type="text"
+              th:value="${user.name}"
+              class="form-control"
+              readonly
+            />
           </div>
           <div class="mb-3">
             <label class="form-label">Email </label>
-            <input type="email" readonly th:value="${user.email}" class="form-control" />
+            <input
+              type="email"
+              readonly
+              th:value="${user.email}"
+              class="form-control"
+            />
           </div>
           <th:block th:object="${orderRequest}">
             <div class="mb-3">
               <label class="form-label">Số điện thoại *</label>
-              <input type="text" th:field="*{sdt}" class="form-control" placeholder="Nhập số điện thoại" />
+              <input
+                type="text"
+                th:field="*{sdt}"
+                class="form-control"
+                placeholder="Nhập số điện thoại"
+              />
               <i class="error" th:errors="*{sdt}"></i>
             </div>
 
             <!-- Thêm phần chọn địa chỉ -->
             <div class="mb-3">
               <label class="form-label">Tỉnh/TP *</label>
-              <select id="province" class="form-control" onchange="loadDistricts()">
+              <select
+                id="province"
+                class="form-control"
+                onchange="loadDistricts()"
+              >
                 <option value="">Chọn tỉnh/thành phố</option>
               </select>
             </div>
@@ -47,7 +74,12 @@
 
             <div class="mb-3">
               <label class="form-label">Địa chỉ cụ thể *</label>
-              <input type="text" th:field="*{address}" class="form-control" placeholder="Nhập địa chỉ cụ thể" />
+              <input
+                type="text"
+                th:field="*{address}"
+                class="form-control"
+                placeholder="Nhập địa chỉ cụ thể"
+              />
               <i class="error" th:errors="*{address}"></i>
             </div>
           </th:block>
@@ -61,7 +93,9 @@
           <th:block th:each="item : ${cartItems}">
             <div class="d-flex justify-content-between">
               <p th:text="${item.product.name} + ' x ' + ${item.quantity}"></p>
-              <span th:text="${#numbers.formatDecimal(item.getTotal(), 0, 'COMMA', 0, 'POINT')} + ' VND'"></span>
+              <span
+                th:text="${#numbers.formatDecimal(item.getTotal(), 0, 'COMMA', 0, 'POINT')} + ' VND'"
+              ></span>
             </div>
             <input type="hidden" name="cartItemIds" th:value="${item.id}" />
             <hr />
@@ -69,8 +103,10 @@
 
           <p>
             <strong>Tổng cộng:</strong>
-            <span class="float-end"
-              th:text="${#numbers.formatDecimal(totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"></span>
+            <span
+              class="float-end"
+              th:text="${#numbers.formatDecimal(totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+            ></span>
           </p>
         </div>
 
@@ -82,15 +118,14 @@
     </div>
   </form>
 </div>
-
 <script>
   // Lấy danh sách tỉnh/thành phố
-  fetch('https://provinces.open-api.vn/api/p/')
-    .then(response => response.json())
-    .then(data => {
-      const provinceSelect = document.getElementById('province');
-      data.forEach(province => {
-        const option = document.createElement('option');
+  fetch("https://provinces.open-api.vn/api/p/")
+    .then((response) => response.json())
+    .then((data) => {
+      const provinceSelect = document.getElementById("province");
+      data.forEach((province) => {
+        const option = document.createElement("option");
         option.value = province.code;
         option.textContent = province.name;
         provinceSelect.appendChild(option);
@@ -99,16 +134,17 @@
 
   // Lấy danh sách quận/huyện
   function loadDistricts() {
-    const provinceCode = document.getElementById('province').value;
-    const districtSelect = document.getElementById('district');
+    const provinceCode = document.getElementById("province").value;
+    const districtSelect = document.getElementById("district");
     districtSelect.innerHTML = '<option value="">Chọn huyện/quận</option>'; // Reset district select
 
     if (provinceCode) {
       fetch(`https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`)
-        .then(response => response.json())
-        .then(data => {
-          data.districts.forEach(district => {
-            const option = document.createElement('option');
+        .then((response) => response.json())
+        .then((data) => {
+          districtSelect.dataset.provinceName = data.name; // Lưu tên tỉnh/thành phố
+          data.districts.forEach((district) => {
+            const option = document.createElement("option");
             option.value = district.code;
             option.textContent = district.name;
             districtSelect.appendChild(option);
@@ -119,16 +155,17 @@
 
   // Lấy danh sách phường/xã
   function loadWards() {
-    const districtCode = document.getElementById('district').value;
-    const wardSelect = document.getElementById('ward');
+    const districtCode = document.getElementById("district").value;
+    const wardSelect = document.getElementById("ward");
     wardSelect.innerHTML = '<option value="">Chọn xã/phường</option>'; // Reset ward select
 
     if (districtCode) {
       fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
-        .then(response => response.json())
-        .then(data => {
-          data.wards.forEach(ward => {
-            const option = document.createElement('option');
+        .then((response) => response.json())
+        .then((data) => {
+          wardSelect.dataset.districtName = data.name; // Lưu tên huyện/quận
+          data.wards.forEach((ward) => {
+            const option = document.createElement("option");
             option.value = ward.code;
             option.textContent = ward.name;
             wardSelect.appendChild(option);
@@ -136,4 +173,25 @@
         });
     }
   }
+
+  // Ghép địa chỉ trước khi gửi form
+  document.querySelector("form").addEventListener("submit", function (event) {
+    const province =
+      document.getElementById("province").selectedOptions[0].text;
+    const district =
+      document.getElementById("district").selectedOptions[0].text;
+    const ward = document.getElementById("ward").selectedOptions[0].text;
+    const specificAddress = document.querySelector("[name='address']").value;
+
+    if (!province || !district || !ward || !specificAddress) {
+      alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
+      event.preventDefault(); // Ngăn chặn gửi form nếu thiếu dữ liệu
+      return;
+    }
+
+    // Cập nhật địa chỉ đầy đủ vào input hidden
+    document.querySelector(
+      "[name='address']"
+    ).value = `${specificAddress}, ${ward}, ${district}, ${province}`;
+  });
 </script>
