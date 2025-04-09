@@ -200,8 +200,29 @@
                     th:text="${item.name}"
                   ></h5>
 
-                  <span class="fw-bold text-dark small" th:text="${item.price}">
-                  </span>
+                  <!-- Nếu có giảm giá -->
+                  <th:block
+                    th:if="${item.discountPercent != null && item.discountPercent > 0}"
+                  >
+                    <span
+                      class="fw-bold text-danger d-block"
+                      th:text="${#numbers.formatDecimal(item.getPriceAfterDiscount(), 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                    <span
+                      class="text-muted fw-bold text-decoration-line-through ms-2 d-block"
+                      th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
+
+                  <!-- Nếu không có giảm giá -->
+                  <th:block
+                    th:if="${item.discountPercent == null || item.discountPercent == 0}"
+                  >
+                    <span
+                      class="fw-bold text-dark fw-bold"
+                      th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')} + ' VND'"
+                    ></span>
+                  </th:block>
                 </div>
               </a>
             </div>

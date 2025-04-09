@@ -1,5 +1,7 @@
 package poly.edu.Assignment.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
@@ -29,6 +31,19 @@ public class CartItem {
     private double price; 
     
     public double getTotal() {
-        return price * quantity;
+        double originalPrice = product.getPrice();
+        Integer discount = product.getDiscountPercent();
+        if (discount != null && discount > 0) {
+            LocalDate now = LocalDate.now();
+            LocalDate start = product.getDiscountStart();
+            LocalDate end = product.getDiscountEnd();
+
+            // Chỉ áp dụng giảm giá nếu trong thời gian hợp lệ
+            if (start == null || !now.isBefore(start) && (end == null || !now.isAfter(end))) {
+                double discountedPrice = originalPrice * (1 - discount / 100.0);
+                return discountedPrice * quantity;
+            }
+        }
+        return originalPrice * quantity;
     }
 }
