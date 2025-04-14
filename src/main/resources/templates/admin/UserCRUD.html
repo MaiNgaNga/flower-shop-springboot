@@ -52,7 +52,7 @@
     >
       <form action="/User/index" th:object="${User}" method="post">
         <div class="row">
-          <th:block th:if="${User.role==true||User.role==null}">
+          <th:block th:if="${User.role==1||User.role==null}">
             <div class="col-6">
               <div class="mb-1">
                 <label for="id" class="form-label">ID</label>
@@ -98,7 +98,15 @@
                   <input
                     type="radio"
                     th:field="*{role}"
-                    value="true"
+                    value="0"
+                    id="roleUser"
+                  />
+                  <label for="roleUser">User</label>
+
+                  <input
+                    type="radio"
+                    th:field="*{role}"
+                    value="1"
                     id="roleAdmin"
                   />
                   <label for="roleAdmin">Admin</label>
@@ -106,10 +114,10 @@
                   <input
                     type="radio"
                     th:field="*{role}"
-                    value="false"
-                    id="roleUser"
+                    value="2"
+                    id="roleShipper"
                   />
-                  <label for="roleUser">User</label>
+                  <label for="roleShipper">Shipper</label>
                   <i class="error" th:errors="*{role}"></i>
                 </div>
               </div>
@@ -121,7 +129,7 @@
               class="form-control form-control-sm"
             />
           </th:block>
-          <th:block th:if="${User.role==false}">
+          <th:block th:if="${User.role == 2 || User.role == 0 }">
             <div class="col-6">
               <div class="mb-1">
                 <label for="id" class="form-label">ID</label>
@@ -170,18 +178,29 @@
                   <input
                     type="radio"
                     th:field="*{role}"
-                    value="true"
+                    value="0"
+                    id="roleUser"
+                    disabled
+                  />
+                  <label for="roleUser">User</label>
+
+                  <input
+                    type="radio"
+                    th:field="*{role}"
+                    value="1"
                     id="roleAdmin"
+                    disabled
                   />
                   <label for="roleAdmin">Admin</label>
 
                   <input
                     type="radio"
                     th:field="*{role}"
-                    value="false"
-                    id="roleUser"
+                    value="2"
+                    id="roleShipper"
+                    disabled
                   />
-                  <label for="roleUser">User</label>
+                  <label for="roleShipper">Shipper</label>
                   <i class="error" th:errors="*{role}"></i>
                 </div>
               </div>
@@ -268,7 +287,14 @@
                 <td th:text="${item.id}"></td>
                 <td th:text="${item.name}"></td>
                 <td th:text="${item.email}"></td>
-                <td th:text="${item.role ? 'Admin' : 'User'}"></td>
+                <td>
+                  <span th:switch="${item.role}">
+                    <span th:case="0">User</span>
+                    <span th:case="1">Admin</span>
+                    <span th:case="2">Shipper</span>
+                    <span th:case="*">Không rõ</span>
+                  </span>
+                </td>
                 <td>
                   <a
                     class="btn btn-sm btn-info"
