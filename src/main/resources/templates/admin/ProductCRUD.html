@@ -106,6 +106,64 @@
             <i class="error" th:errors="*{quantity}"></i>
           </div>
         </div>
+
+        <!-- Thêm phần giảm giá ở đây -->
+        <div class="row mt-3">
+          <div class="col-12">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="applyDiscount"
+                th:checked="${product.discountPercent != null or product.discountStart != null or product.discountEnd != null or #fields.hasErrors('discountPercent') or #fields.hasErrors('discountStart') or #fields.hasErrors('discountEnd')}"
+                onchange="toggleDiscountFields()"
+              />
+              <label class="form-check-label" for="applyDiscount">
+                Áp dụng giảm giá
+              </label>
+            </div>
+          </div>
+        </div>
+        <div id="discountFields">
+          <div class="row mt-2">
+            <div class="col-md-4">
+              <label for="discountPercent" class="form-label"
+                >Giảm giá (%)</label
+              >
+              <input
+                type="number"
+                id="discountPercent"
+                th:field="*{discountPercent}"
+                class="form-control form-control-sm"
+                placeholder="Từ 1 đến 100"
+              />
+              <i class="error" th:errors="*{discountPercent}"></i>
+            </div>
+
+            <div class="col-md-4">
+              <label for="discountStart" class="form-label">Ngày bắt đầu</label>
+              <input
+                type="date"
+                id="discountStart"
+                th:field="*{discountStart}"
+                class="form-control form-control-sm"
+              />
+              <i class="error" th:errors="*{discountStart}"></i>
+            </div>
+
+            <div class="col-md-4">
+              <label for="discountEnd" class="form-label">Ngày kết thúc</label>
+              <input
+                type="date"
+                id="discountEnd"
+                th:field="*{discountEnd}"
+                class="form-control form-control-sm"
+              />
+              <i class="error" th:errors="*{discountEnd}"></i>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-6">
             <label for="category" class="form-label">Loại hoa</label>
@@ -240,6 +298,9 @@
               <th>Tên sản phẩm</th>
               <th>Giá sản phẩm</th>
               <th>Số lượng</th>
+              <th>Giảm giá (%)</th>
+              <th>Ngày bắt đầu</th>
+              <th>Ngày kết thúc</th>
               <th>Hình Ảnh</th>
               <th>Loại Hoa</th>
               <th>Màu Sắc</th>
@@ -251,9 +312,19 @@
             <tr th:each="item : ${products}">
               <td th:text="${item.id}"></td>
               <td th:text="${item.name}"></td>
-              <td th:text="${item.price}"></td>
+              <td
+                th:text="${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'COMMA') + ' VNĐ'}"
+              ></td>
               <td th:text="${item.quantity}"></td>
-
+              <td
+                th:text="${item.discountPercent != null ? item.discountPercent + '%' : 'Không'}"
+              ></td>
+              <td
+                th:text="${item.discountStart != null ? #temporals.format(item.discountStart, 'dd/MM/yyyy') : 'N/A'}"
+              ></td>
+              <td
+                th:text="${item.discountEnd != null ? #temporals.format(item.discountEnd, 'dd/MM/yyyy') : 'N/A'}"
+              ></td>
               <td>
                 <img
                   th:src="@{/images/{image}(image=${item.image_url})}"
@@ -287,3 +358,34 @@
     </div>
   </div>
 </main>
+<script>
+  function toggleDiscountFields() {
+    const checkbox = document.getElementById("applyDiscount");
+    const discountSection = document.getElementById("discountFields");
+
+    if (checkbox.checked) {
+      discountSection.classList.remove("d-none");
+      discountSection.style.display = "block";
+    } else {
+      discountSection.style.display = "none";
+    }
+  }
+
+  window.addEventListener("DOMContentLoaded", () => {
+    const checkbox = document.getElementById("applyDiscount");
+
+    // Gọi toggle để ẩn/hiện ngay khi load
+    toggleDiscountFields();
+
+    // Nếu có lỗi validation, vẫn giữ hiển thị vùng giảm giá
+    const hasError =
+      document.querySelector(".error[th\\:errors='*{discountPercent}']") ||
+      document.querySelector(".error[th\\:errors='*{discountStart}']") ||
+      document.querySelector(".error[th\\:errors='*{discountEnd}']");
+
+    if (hasError) {
+      checkbox.checked = true;
+      toggleDiscountFields();
+    }
+  });
+</script>

@@ -306,7 +306,24 @@
           <div class="col-md-5 product">
             <h4 class="product-title" th:text="*{name}"></h4>
              
-            <p class="product-price" th:text="*{price}+VND"></p>
+           <!-- Giá sản phẩm: Có giảm giá -->
+           <th:block th:if="*{priceAfterDiscount lt price}">
+            <div class="product-price">
+              <div class="text-danger fw-bold" 
+                  th:text="${#numbers.formatDecimal(product.priceAfterDiscount, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+              </div>
+              <div class="text-muted text-decoration-line-through" 
+                  th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+              </div>
+            </div>
+          </th:block>
+
+          <!-- Giá sản phẩm: Không giảm giá -->
+          <th:block th:if="*{priceAfterDiscount eq price}">
+            <div class="product-price" 
+                th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')} + ' VND'">
+            </div>
+          </th:block>
             <div class="button-group">
               <form th:action="@{/cart/add}" method="post">
               <input type="hidden" name="productId" th:value="${product.id}" />
