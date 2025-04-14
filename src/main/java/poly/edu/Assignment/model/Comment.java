@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name = "comments")
 @Data
@@ -31,14 +33,12 @@ public class Comment {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    @NotBlank(message = "Nội dung không được để trống") 
+    @NotBlank(message = "Nội dung không được để trống")
     @Column(columnDefinition = "NVARCHAR(255)")
     private String content;
 
     @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
- 
-
-    
 }

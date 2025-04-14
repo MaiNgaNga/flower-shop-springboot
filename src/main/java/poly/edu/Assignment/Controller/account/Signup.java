@@ -28,7 +28,7 @@ private SendMailService sendMailService;
 @GetMapping("/signup")   
 public String signup(Model model) {
     User user=new User();
-    user.setRole(false); 
+    user.setRole(0); 
     model.addAttribute("User", user);
 
     return showSignupForm(model);

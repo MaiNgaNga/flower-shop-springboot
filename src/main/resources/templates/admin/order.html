@@ -105,30 +105,13 @@
             <br />
             <span class="mx-3" th:text="'Phone: '+${order.sdt}"></span>
           </div>
-
-          <!-- Nút "Đã giao" -->
+          
           <form
             th:action="@{/orderAdmin/update/{orderId}(orderId=${order.id})}"
             method="post"
             style="display: inline"
           >
-            <input type="hidden" name="status" value="Đã xác nhận" />
-            <button
-              type="submit"
-              class="btn btn-success"
-              th:if="${order.status == 'Đã xác nhận'}"
-            >
-              Đã giao
-            </button>
-          </form>
-
-          <!-- Nút "Xác nhận" -->
-          <form
-            th:action="@{/orderAdmin/update/{orderId}(orderId=${order.id})}"
-            method="post"
-            style="display: inline"
-          >
-            <input type="hidden" name="status" value="Chưa xác nhận" />
+            <input type="hidden" name="status" value="Chờ giao" />
             <button
               type="submit"
               class="btn btn-primary"
