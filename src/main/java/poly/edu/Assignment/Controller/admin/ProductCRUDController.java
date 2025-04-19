@@ -3,6 +3,9 @@ package poly.edu.Assignment.Controller.admin;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -60,7 +63,17 @@ public class ProductCRUDController {
         return productCategoryService.findAll();
     }
     @RequestMapping("/index")
-    public String index(Model model) {
+    public String index(Model model,
+                        @RequestParam(value = "page", defaultValue = "0") int page,
+                        @RequestParam(value = "size", defaultValue = "10") int size) {
+        
+        Pageable pageable = PageRequest.of(page, size); // Tạo Pageable từ tham số page và size
+        Page<Product> productPage = productService.findByAllProduct(pageable);
+
+        model.addAttribute("products", productPage.getContent());  // Thêm dữ liệu phân trang vào model
+        model.addAttribute("currentPage", page);  // Lưu trang hiện tại
+        model.addAttribute("totalPages", productPage.getTotalPages());  // Lưu tổng số trang
+
         model.addAttribute("product", new Product());
         model.addAttribute("view", "admin/ProductCRUD");
         return "admin/layout";
@@ -87,9 +100,18 @@ public class ProductCRUDController {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(Model model, @PathVariable("id") long id) {
+    public String edit(Model model, @PathVariable("id") long id,
+                        @RequestParam(value = "page", defaultValue = "0") int page,
+                        @RequestParam(value = "size", defaultValue = "10") int size) {
         Product product = productService.findByID(id);
         
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Product> productPage = productService.findByAllProduct(pageable);
+
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+
         model.addAttribute("product", product);
         model.addAttribute("view", "admin/ProductCRUD");
         return "admin/layout";
@@ -104,7 +126,14 @@ public class ProductCRUDController {
             return "admin/layout";
         }
         try {
-          
+             // Nếu không áp dụng giảm giá, reset về null
+            if (product.getDiscountPercent() == null &&
+                product.getDiscountStart() == null &&
+                product.getDiscountEnd() == null) {
+                product.setDiscountPercent(null);
+                product.setDiscountStart(null);
+                product.setDiscountEnd(null);
+            }
             productService.update(product, imageFile,oldImage);
             redirectAttributes.addFlashAttribute("success", "Cập nhật sản phẩm thành công!");
             return "redirect:/Product/edit/" + product.getId();

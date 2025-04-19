@@ -355,6 +355,63 @@
           </tbody>
         </table>
       </div>
+      <!-- Phân trang -->
+      <div class="d-flex justify-content-center mt-3">
+        <nav>
+          <ul class="pagination">
+            <li
+              class="page-item"
+              th:classappend="${currentPage == 0} ? 'disabled'"
+            >
+              <a class="page-link" th:href="@{|/Product/index?page=0|}"
+                >First</a
+              >
+            </li>
+            <li
+              class="page-item"
+              th:classappend="${currentPage == 0} ? 'disabled'"
+            >
+              <a
+                class="page-link"
+                th:href="@{|/Product/index?page=${currentPage - 1}|}"
+              >
+                <i class="fas fa-angle-left"></i
+              ></a>
+            </li>
+            <li
+              class="page-item"
+              th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+              th:classappend="${currentPage == i} ? 'active'"
+            >
+              <a
+                class="page-link"
+                th:href="@{|/Product/index?page=${i}|}"
+                th:text="${i + 1}"
+              ></a>
+            </li>
+            <li
+              class="page-item"
+              th:classappend="${currentPage + 1 == totalPages} ? 'disabled'"
+            >
+              <a
+                class="page-link"
+                th:href="@{|/Product/index?page=${currentPage + 1}|}"
+                ><i class="fas fa-angle-right"></i
+              ></a>
+            </li>
+            <li
+              class="page-item"
+              th:classappend="${currentPage + 1 == totalPages} ? 'disabled'"
+            >
+              <a
+                class="page-link"
+                th:href="@{|/Product/index?page=${totalPages - 1}|}"
+                >Last</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </main>
@@ -368,6 +425,11 @@
       discountSection.style.display = "block";
     } else {
       discountSection.style.display = "none";
+
+      // Reset các trường giảm giá về rỗng
+      document.getElementById("discountPercent").value = "";
+      document.getElementById("discountStart").value = "";
+      document.getElementById("discountEnd").value = "";
     }
   }
 
