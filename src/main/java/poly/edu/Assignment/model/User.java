@@ -13,11 +13,11 @@ import lombok.*;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private int id; 
+    private int id;
 
-    @NotBlank(message = "Tên không được để trống") 
+    @NotBlank(message = "Tên không được để trống")
     @Column(columnDefinition = "NVARCHAR(255)")
     private String name;
 
@@ -26,11 +26,10 @@ public class User {
     private String password;
 
     @NotBlank(message = "Email không được để trống")
-    @Email(message = "Email không hợp lệ") 
+    @Email(message = "Email không hợp lệ")
     private String email;
 
-    @NotNull(message = "Vai trò không được để trống") 
-    private Boolean role;
+    @NotNull(message = "Vai trò không được để trống")
+    private Integer role;
 
-   
 }

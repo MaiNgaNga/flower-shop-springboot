@@ -479,6 +479,7 @@
                           <p class="review-text" th:text="${item.content}">
                             Tư vấn nhiệt tình, dịch vụ khá hài lòng.
                           </p>
+                          <a th:href="@{/comments/delete/{id}(id=${item.id}, productId=${product.id})}" class="btn btn-danger btn-sm">Xóa</a>
                         </div>
                       </div>
                     </li>

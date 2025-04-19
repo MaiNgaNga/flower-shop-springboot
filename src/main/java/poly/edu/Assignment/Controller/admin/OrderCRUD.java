@@ -26,16 +26,16 @@ public class OrderCRUD {
     OrderService orderService;
 
     @GetMapping
-    public String index(Model model, 
-                    @RequestParam(value = "orderStatus", required = false, defaultValue = "Chưa xác nhận") String orderStatus) {
-    List<ProductCategory> productCategories = pro_ca_dao.findAll();
-    model.addAttribute("productCategories", productCategories);
-    model.addAttribute("orderStatus", orderStatus);
-    List<Order> orders=orderService.findByStatus(orderStatus);
-    model.addAttribute("orders", orders);
-    model.addAttribute("totalOrders", orders.size());
-    model.addAttribute("view", "admin/order");
-    return "admin/layout";
+    public String index(Model model,
+            @RequestParam(value = "orderStatus", required = false, defaultValue = "Chưa xác nhận") String orderStatus) {
+        List<ProductCategory> productCategories = pro_ca_dao.findAll();
+        model.addAttribute("productCategories", productCategories);
+        model.addAttribute("orderStatus", orderStatus);
+        List<Order> orders = orderService.findByStatus(orderStatus);
+        model.addAttribute("orders", orders);
+        model.addAttribute("totalOrders", orders.size());
+        model.addAttribute("view", "admin/order");
+        return "admin/layout";
     }
 
     @PostMapping("/update/{orderId}")
@@ -44,22 +44,21 @@ public class OrderCRUD {
         Order order = orderService.getOrderById(orderId);
         if (order != null) {
             switch (status) {
-                case "Chưa xác nhận":
+                case "Chờ giao":
                     if (order.getStatus().equals("Chưa xác nhận")) {
-                        orderService.updateStatus(orderId,"Đã xác nhận");
+                        orderService.updateStatus(orderId, "Đã xác nhận");
                     }
                     break;
                 case "Đã xác nhận":
                     if (order.getStatus().equals("Đã xác nhận")) {
-                        orderService.updateStatus(orderId,"Đã giao");
+                        orderService.updateStatus(orderId, "Đã giao");
                     }
                     break;
                 default:
                     break;
             }
         }
-        return "redirect:/orderAdmin"; 
+        return "redirect:/orderAdmin";
     }
-
 
 }
