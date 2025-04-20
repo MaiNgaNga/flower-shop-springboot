@@ -27,6 +27,9 @@
       <option value="Đã hủy" th:selected="${orderStatus == 'Đã hủy'}">
         Đã hủy
       </option>
+      <option value="Hoàn hàng" th:selected="${orderStatus == 'Hoàn hàng'}">
+        Hoàn hàng
+      </option>
     </select>
   </form>
   <i class="m-3 p-3" th:text="${totalOrders} +' Đơn hàng'"></i>
@@ -50,11 +53,15 @@
             class="badge bg-dark ms-2 mx-3"
             th:text="${order.status}"
           ></span>
+
           <span
-            class="fw-bold text-primary"
+            class="fw-bold text-primary mx-1"
             th:text="${#numbers.formatDecimal(order.totalAmount, 0, 'COMMA', 0, 'POINT')} + ' VND'"
           >
           </span>
+          <span
+            th:text="${order.shipper != null ? 'Shipper: '+order.shipper.name : ''}"
+          ></span>
         </button>
       </h2>
       <div
@@ -105,7 +112,7 @@
             <br />
             <span class="mx-3" th:text="'Phone: '+${order.sdt}"></span>
           </div>
-          
+
           <form
             th:action="@{/orderAdmin/update/{orderId}(orderId=${order.id})}"
             method="post"

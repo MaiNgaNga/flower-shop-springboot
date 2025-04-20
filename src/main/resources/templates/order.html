@@ -76,9 +76,15 @@
               <label class="form-label">Địa chỉ cụ thể *</label>
               <input
                 type="text"
-                th:field="*{address}"
+                id="specific"
                 class="form-control"
                 placeholder="Nhập địa chỉ cụ thể"
+              />
+              <input
+                type="text"
+                th:field="*{address}"
+                class="form-control"
+                hidden
               />
               <i class="error" th:errors="*{address}"></i>
             </div>
@@ -113,6 +119,13 @@
         <!-- Nút Đặt Hàng gửi form -->
         <button type="submit" class="btn btn-success w-100 mt-3">
           ĐẶT HÀNG
+        </button>
+        <button
+          type="button"
+          class="btn w-100 mt-3"
+          onclick="handleZaloPayPayment()"
+        >
+          THANH TOÁN QUA ZALOPAY
         </button>
       </div>
     </div>
@@ -181,7 +194,7 @@
     const district =
       document.getElementById("district").selectedOptions[0].text;
     const ward = document.getElementById("ward").selectedOptions[0].text;
-    const specificAddress = document.querySelector("[name='address']").value;
+    const specificAddress = document.getElementById("specific").value;
 
     if (!province || !district || !ward || !specificAddress) {
       alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
@@ -194,4 +207,52 @@
       "[name='address']"
     ).value = `${specificAddress}, ${ward}, ${district}, ${province}`;
   });
+
+
+  async function handleZaloPayPayment() {
+    // Validate địa chỉ
+    const province = document.getElementById("province").selectedOptions[0]?.text;
+    const district = document.getElementById("district").selectedOptions[0]?.text;
+    const ward = document.getElementById("ward").selectedOptions[0]?.text;
+    const specificAddress = document.querySelector("[name='address']").value;
+
+    if (!province || !district || !ward || !specificAddress) {
+      alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
+      return;
+    }
+
+    // Ghép địa chỉ đầy đủ
+    const fullAddress = `${specificAddress}, ${ward}, ${district}, ${province}`;
+
+    // Chuẩn bị dữ liệu order gửi qua Zalopay
+    const orderData = {
+      appUser: "[[${user.email}]]", // bạn có thể dùng email hoặc ID
+      amount: [[${totalAmount}]], // hoặc bạn có thể render thành JS từ server
+      description: "Thanh toán đơn hàng tại cửa hàng ABC",
+      address: fullAddress
+    };
+
+    try {
+      const response = await fetch("/api/zalopay", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(orderData)
+      });
+
+      const result = await response.text(); // Có thể trả về JSON nếu backend trả JSON
+      const json = JSON.parse(result); // parse nếu backend trả dạng chuỗi JSON
+
+      if (json.order_url) {
+        window.location.href = json.order_url; // Redirect tới ZaloPay
+      } else {
+        alert("Không thể tạo đơn hàng ZaloPay.");
+        console.error(json);
+      }
+    } catch (error) {
+      console.error("Lỗi khi tạo thanh toán ZaloPay:", error);
+      alert("Đã xảy ra lỗi khi thanh toán ZaloPay.");
+    }
+  }
 </script>
