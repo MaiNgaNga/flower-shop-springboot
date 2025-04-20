@@ -60,4 +60,33 @@ public class ProductController {
         return "layouts/layout";
 
     }
+
+    @RequestMapping("/search")
+    public String searchProductByName(Model model,
+            @RequestParam(name = "keyword", required = false) String keyword,
+            @RequestParam(name = "p", defaultValue = "0") int page) {
+        try {
+            Pageable pageable = PageRequest.of(page, 12);
+            Page<Product> result;
+
+            if (keyword == null || keyword.trim().isEmpty()) {
+                // Nếu không nhập từ khóa, trả về danh sách rỗng (hoặc tất cả tùy ý)
+                result = Page.empty();
+            } else {
+                result = productService.searchByName(keyword.trim(), pageable);
+            }
+
+            model.addAttribute("page", result);
+            model.addAttribute("productCategories", pro_ca_service.findAll());
+            model.addAttribute("categogies", ca_Service.findAll());
+            model.addAttribute("searchKeyword", keyword);
+            model.addAttribute("pro_ca", null);
+            model.addAttribute("view", "product");
+
+            return "layouts/layout";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
+    }
 }

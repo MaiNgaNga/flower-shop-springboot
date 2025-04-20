@@ -129,4 +129,9 @@ public class ProductServiceImpl implements ProductService {
     public Page<Product> findByAllProduct(Pageable pageable) {
         return dao.findAll(pageable);
     }
+
+    @Override
+    public Page<Product> searchByName(String name, Pageable pageable) {
+        return dao.searchByName(name, pageable);
+    }
 }
