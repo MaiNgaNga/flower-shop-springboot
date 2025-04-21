@@ -24,6 +24,9 @@
       <option value="Đã giao" th:selected="${orderStatus == 'Đã giao'}">
         Đã giao
       </option>
+      <option value="Hoàn hàng" th:selected="${orderStatus == 'Hoàn hàng'}">
+        Hoàn trả
+      </option>
       <option value="Đã hủy" th:selected="${orderStatus == 'Đã hủy'}">
         Đã hủy
       </option>
@@ -71,6 +74,8 @@
                 <th>Số lượng</th>
                 <th>Đơn giá</th>
                 <th>Thành tiền</th>
+                <th>NV Giao Hàng</th>
+                <!-- <th>Số điện thoại</th> -->
               </tr>
             </thead>
             <tbody>
@@ -95,6 +100,12 @@
                 <td
                   th:text="${#numbers.formatDecimal(detail.price * detail.quantity, 0, 'COMMA', 0, 'POINT')} + ' VND'"
                 ></td>
+                <td
+                  th:text="${detail.order.shipper != null ? detail.order.shipper.name : 'Chưa giao'}"
+                ></td>
+                <!-- <td
+                  th:text="${detail.order.shipper != null ? detail.order.sdt : 'Chưa giao'}"
+                ></td>    -->
               </tr>
             </tbody>
           </table>
@@ -105,7 +116,7 @@
             <br />
             <span class="mx-3" th:text="'Phone: '+${order.sdt}"></span>
           </div>
-          
+
           <form
             th:action="@{/orderAdmin/update/{orderId}(orderId=${order.id})}"
             method="post"

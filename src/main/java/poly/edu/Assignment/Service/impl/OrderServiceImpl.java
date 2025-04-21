@@ -101,10 +101,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order updateToDangGiao(Long orderId, int shipperId) {
         Order order = dao.findById(orderId).orElse(null);
-        User shipper = userDAO.findById(shipperId).orElse(null); // lấy shipper theo ID
+        User shipper = userDAO.findById(shipperId).orElse(null); 
         if (order != null && "Đã xác nhận".equals(order.getStatus())) {
             order.setStatus("Đang giao");
-            order.setShipper(shipper); // nếu bạn có trường này
+            order.setShipper(shipper);
             return dao.save(order);
         }
         return null;
@@ -175,4 +175,6 @@ public class OrderServiceImpl implements OrderService {
         return dao.getTotalCompletedAmountByShipperIdAndDateNative(shipperId, date);
 
     }
+
+    
 }

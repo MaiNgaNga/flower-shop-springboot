@@ -15,6 +15,7 @@ import poly.edu.Assignment.model.Order;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import poly.edu.Assignment.model.User;
 import poly.edu.Assignment.utils.AuthService;
@@ -89,27 +90,26 @@ public class ShipperOrderController {
     public String history(@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
             Model model) {
         User shipper = authService.getUser();
-        if (shipper != null && shipper.getRole() == 2) {
-            List<Order> historyOrders;
-            Double totalAmount;
+        List<Order> historyOrders = new ArrayList<>();
+        Double totalAmount = 0.0;
 
+        if (shipper != null && shipper.getRole() == 2) {
             if (date != null) {
                 historyOrders = orderService.getOrdersByShipperAndDate(shipper.getId(), date);
                 totalAmount = orderService.getTotalAmountByShipperAndDate(shipper.getId(), date);
                 model.addAttribute("selectedDate", new SimpleDateFormat("yyyy-MM-dd").format(date));
-
-                System.out.println("History orders: " + historyOrders);
-                System.out.println("Total amount: " + totalAmount);
+                System.out.println("Lấy đơn của ngày: " + date);
+                System.out.println("Số đơn lấy được: " + historyOrders.size());
             } else {
                 historyOrders = orderService.getOrdersByStatusAndShipper("Đã giao", shipper.getId());
                 totalAmount = orderService.getTotalCompletedOrdersAmount(shipper.getId());
             }
-
-            model.addAttribute("orders", historyOrders);
-            model.addAttribute("total", totalAmount);
-
         }
+
+        model.addAttribute("orders", historyOrders); // luôn add dù có đơn hay không
+        model.addAttribute("total", totalAmount);
         model.addAttribute("view", "shipper/history");
+
         return "shipper/layout";
     }
 

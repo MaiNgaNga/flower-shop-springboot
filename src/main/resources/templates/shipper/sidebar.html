@@ -7,7 +7,7 @@
     style="text-align: center"
   />
   <div class="d-flex align-items-center">
-    <h5>Xin chào Shipper!</h5>
+    <h5 th:text="'Hi, ' + ${session.user.name} + ' !'"></h5>
   </div>
 
   <nav class="nav flex-column pt-2">

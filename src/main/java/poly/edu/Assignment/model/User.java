@@ -21,6 +21,10 @@ public class User {
     @Column(columnDefinition = "NVARCHAR(255)")
     private String name;
 
+    // @NotBlank(message = "Số điện thoại không được để trống")
+    // @Column(name = "phone", columnDefinition = "VARCHAR(20)")
+    // private String phone;
+
     @NotBlank(message = "Mật khẩu không được để trống")
     @Size(min = 4, message = "Mật khẩu phải có ít nhất 4 ký tự")
     private String password;

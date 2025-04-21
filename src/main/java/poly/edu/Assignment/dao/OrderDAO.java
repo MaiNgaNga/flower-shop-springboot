@@ -45,15 +45,13 @@ public interface OrderDAO extends JpaRepository<Order, Long> {
   Double getTotalCompletedAmountByShipperId(@Param("shipperId") int shipperId);
 
   @Query(value = "SELECT SUM(total_amount) FROM orders " +
-  "WHERE shipper_id = :shipperId " +
-  "AND status = N'Đã giao' " +
-  "AND CAST(create_date AS DATE) = :date", nativeQuery = true)
-  Double getTotalCompletedAmountByShipperIdAndDateNative(@Param("shipperId")
-  int shipperId,
-  @Param("date") Date date);
+      "WHERE shipper_id = :shipperId " +
+      "AND status = N'Đã giao' " +
+      "AND CAST(create_date AS DATE) = :date", nativeQuery = true)
+  Double getTotalCompletedAmountByShipperIdAndDateNative(@Param("shipperId") int shipperId,
+      @Param("date") Date date);
 
-  @Query(value = "SELECT * FROM orders o WHERE o.shipper_id = :shipperId AND o.status = 'Đã giao' AND CONVERT(date, o.create_date) = :date", nativeQuery = true)
+  @Query(value = "SELECT * FROM orders o WHERE o.shipper_id = :shipperId AND o.status = N'Đã giao' AND CONVERT(date, o.create_date) = :date", nativeQuery = true)
   List<Order> getOrdersByShipperAndDate(@Param("shipperId") int shipperId, @Param("date") Date date);
-
 
 }

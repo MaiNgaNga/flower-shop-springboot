@@ -54,6 +54,11 @@ public class OrderCRUD {
                         orderService.updateStatus(orderId, "Đã giao");
                     }
                     break;
+                case "Hoàn hàng":
+                    if (order.getStatus().equals("Hoàn hàng")) {
+                        orderService.updateStatus(orderId, "Hoàn hàng");
+                    }
+                    break;
                 default:
                     break;
             }
