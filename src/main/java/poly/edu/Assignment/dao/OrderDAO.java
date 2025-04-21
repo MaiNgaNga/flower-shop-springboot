@@ -52,7 +52,7 @@ public interface OrderDAO extends JpaRepository<Order, Long> {
   int shipperId,
   @Param("date") Date date);
 
-  @Query(value = "SELECT * FROM orders o WHERE o.shipper_id = :shipperId AND o.status = 'Đã giao' AND CONVERT(date, o.create_date) = :date", nativeQuery = true)
+  @Query(value = "SELECT * FROM orders o WHERE o.shipper_id = :shipperId AND o.status = N'Đã giao' AND CONVERT(date, o.create_date) = :date", nativeQuery = true)
   List<Order> getOrdersByShipperAndDate(@Param("shipperId") int shipperId, @Param("date") Date date);
 
 
