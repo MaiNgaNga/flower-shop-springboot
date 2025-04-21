@@ -149,7 +149,6 @@
                   type="text"
                   th:field="*{name}"
                   id="name"
-                  readonly
                   class="form-control form-control-sm"
                   placeholder="Nhập tên người dùng"
                 />
@@ -180,7 +179,6 @@
                     th:field="*{role}"
                     value="0"
                     id="roleUser"
-                    disabled
                   />
                   <label for="roleUser">User</label>
 
@@ -189,7 +187,6 @@
                     th:field="*{role}"
                     value="1"
                     id="roleAdmin"
-                    disabled
                   />
                   <label for="roleAdmin">Admin</label>
 
@@ -198,7 +195,6 @@
                     th:field="*{role}"
                     value="2"
                     id="roleShipper"
-                    disabled
                   />
                   <label for="roleShipper">Shipper</label>
                   <i class="error" th:errors="*{role}"></i>
