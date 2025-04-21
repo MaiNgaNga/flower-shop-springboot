@@ -214,7 +214,7 @@
     const province = document.getElementById("province").selectedOptions[0]?.text;
     const district = document.getElementById("district").selectedOptions[0]?.text;
     const ward = document.getElementById("ward").selectedOptions[0]?.text;
-    const specificAddress = document.querySelector("[name='address']").value;
+    const specificAddress = document.getElementById("specific").value;
 
     if (!province || !district || !ward || !specificAddress) {
       alert("Vui lòng nhập đầy đủ thông tin địa chỉ!");
