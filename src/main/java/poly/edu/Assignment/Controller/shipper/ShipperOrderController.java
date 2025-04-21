@@ -106,7 +106,7 @@ public class ShipperOrderController {
             }
         }
 
-        model.addAttribute("orders", historyOrders); // luôn add dù có đơn hay không
+        model.addAttribute("orders", historyOrders); 
         model.addAttribute("total", totalAmount);
         model.addAttribute("view", "shipper/history");
 
@@ -117,10 +117,9 @@ public class ShipperOrderController {
     public String completeOrder(@PathVariable("orderId") Long orderId) {
         User shipper = authService.getUser();
         if (shipper != null && shipper.getRole() == 2) {
-            // Cập nhật trạng thái đơn hàng là "Đã giao"
             orderService.updateToCompleted(orderId, shipper.getId());
         }
-        return "redirect:/shipper/my-orders"; // Sau khi cập nhật, chuyển đến trang đơn hàng của shipper
+        return "redirect:/shipper/my-orders"; 
     }
 
     @GetMapping("/returned-orders")
