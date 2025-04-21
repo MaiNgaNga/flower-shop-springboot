@@ -123,10 +123,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> findByProductCategoryIdPage(Integer productCategoryId,Pageable pageable){
         return dao.findByProductCategoryId(productCategoryId, pageable);
+    } 
+
+    @Override
+    public Page<Product> findByAllProduct(Pageable pageable) {
+        return dao.findAll(pageable);
     }
 
-   
-
-    
-   
+    @Override
+    public Page<Product> searchByName(String name, Pageable pageable) {
+        return dao.searchByName(name, pageable);
+    }
 }

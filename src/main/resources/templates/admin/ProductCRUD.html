@@ -1,3 +1,34 @@
+<style>
+  .custom-pagination .page-item .page-link {
+    border-radius: 50%;
+    margin: 0 5px;
+    color: #f090b8;
+    border: 1px solid #f090b8;
+    background-color: #fff;
+    transition: all 0.2s ease-in-out;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-pagination .page-item.active .page-link {
+    background-color: #f090b8;
+    color: #fff;
+    border-color: #f090b8;
+  }
+
+  .custom-pagination .page-item.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .custom-pagination .page-item .page-link:hover {
+    background-color: #fcd6e5;
+    color: #d63384;
+  }
+</style>
 <main class="container mt-3">
   <h3>Quản Lý Sản Phẩm</h3>
   <hr />
@@ -355,6 +386,65 @@
           </tbody>
         </table>
       </div>
+      <!-- Phân trang -->
+      <div class="d-flex justify-content-center mt-4">
+        <nav>
+          <ul class="pagination custom-pagination">
+            <li
+              class="page-item"
+              th:classappend="${currentPage == 0} ? 'disabled'"
+            >
+              <a class="page-link" th:href="@{|/Product/index?page=0|}">
+                <i class="fa fa-angle-double-left"></i>
+              </a>
+            </li>
+            <li
+              class="page-item"
+              th:classappend="${currentPage == 0} ? 'disabled'"
+            >
+              <a
+                class="page-link"
+                th:href="@{|/Product/index?page=${currentPage - 1}|}"
+              >
+                <i class="fa fa-angle-left"></i>
+              </a>
+            </li>
+            <li
+              class="page-item"
+              th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+              th:classappend="${currentPage == i} ? 'active'"
+            >
+              <a
+                class="page-link"
+                th:href="@{|/Product/index?page=${i}|}"
+                th:text="${i + 1}"
+              ></a>
+            </li>
+            <li
+              class="page-item"
+              th:classappend="${currentPage + 1 == totalPages} ? 'disabled'"
+            >
+              <a
+                class="page-link"
+                th:href="@{|/Product/index?page=${currentPage + 1}|}"
+              >
+                <i class="fa fa-angle-right"></i>
+              </a>
+            </li>
+            <li
+              class="page-item"
+              th:classappend="${currentPage + 1 == totalPages} ? 'disabled'"
+            >
+              <a
+                class="page-link"
+                th:href="@{|/Product/index?page=${totalPages - 1}|}"
+              >
+                <i class="fa fa-angle-double-right"></i>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </main>
@@ -368,6 +458,11 @@
       discountSection.style.display = "block";
     } else {
       discountSection.style.display = "none";
+
+      // Reset các trường giảm giá về rỗng
+      document.getElementById("discountPercent").value = "";
+      document.getElementById("discountStart").value = "";
+      document.getElementById("discountEnd").value = "";
     }
   }
 

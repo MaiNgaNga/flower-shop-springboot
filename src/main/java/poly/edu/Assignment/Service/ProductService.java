@@ -46,5 +46,10 @@ public interface ProductService {
     );
         
     // Page<Product> findBestSellingProductsByCategory( Integer productCatelogyId,Pageable pageable);
+
+    Page<Product> findByAllProduct(Pageable pageable);
+
+    Page<Product> searchByName(String name, Pageable pageable);
+
 }
 
